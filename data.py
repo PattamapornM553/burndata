@@ -5,7 +5,7 @@ from datetime import datetime
 def connect_db():
     return mysql.connector.connect(host="localhost", user="root", password="", database="my_database")
 
-print("▶️ เริ่มระบบอ่าน RFID (พิมพ์รหัสจำลอง แล้วกด Enter)")
+print("▶️เริ่มระบบอ่าน RFID (พิมพ์รหัสจำลอง แล้วกด Enter)")
 
 while True:
     scanned_rfid = input("\n[รอรับบัตร] กรุณาแตะบัตร: ")
