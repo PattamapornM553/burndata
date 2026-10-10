@@ -1,0 +1,369 @@
+/* =========================
+   1. Root Variables & Base
+   ========================= */
+:root {
+    --bg-main: #f0f2f5; 
+    --card-bg: #ffffff;
+    --blue-tag: #e2eafc;
+    --blue-text: #1a2a5c;
+    --red-tag: #d31a1a;
+    --red-bg: #fcd5df;
+    --green-text: #1a7b45;
+    --green-bg: #e8f5e9;
+    --border-color: #5a6b8c;
+}
+
+/* แก้ไขจาก - เป็น * เพื่อให้คลุมทุก Element */
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    background: var(--bg-main);
+    color: #111;
+    font-family: 'Kanit', Arial, Helvetica, sans-serif;
+    overflow-x: hidden; /* ป้องกันการล้นแนวนอนในระดับหน้าจอหลัก */
+}
+
+/* =========================
+   2. Topbar & Main Layout (Original)
+   ========================= */
+.topbar {
+    height: 105px;
+    border-bottom: 1px solid #ddd;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 5vw;
+    background: #fff;
+}
+
+.brand { 
+    font-size: 25px; 
+    line-height: 1.05; 
+    font-weight: 800; 
+}
+
+.brand span { 
+    font-size: 23px; 
+}
+
+.clock { 
+    text-align: right; 
+    font-size: 17px; 
+    line-height: 1.5; 
+}
+
+.page { 
+    display: none; 
+    min-height: calc(100vh - 105px); 
+    padding: 42px 6vw; 
+}
+
+.page.active { 
+    display: block; 
+}
+
+.section-title { 
+    font-size: 24px; 
+    font-weight: 700; 
+    margin-bottom: 24px; 
+}
+
+/* =========================
+   3. Original Employee Grid & Details
+   ========================= */
+.employee-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+}
+
+.employee-card {
+    min-height: 190px;
+    border: 2px solid #ddd;
+    border-radius: 18px;
+    padding: 25px;
+    background: #fff;
+    cursor: pointer;
+    transition: .2s;
+}
+
+.employee-card:hover { 
+    transform: translateY(-3px); 
+    box-shadow: 0 7px 20px #00000012; 
+}
+
+.employee-card.high { 
+    border-color: #d51f26; 
+    background: #fff7f7; 
+}
+
+.risk-label { 
+    color: #d51f26; 
+    font-size: 20px; 
+    font-weight: 800; 
+    margin-bottom: 18px; 
+}
+
+.employee-name { 
+    font-size: 22px; 
+    font-weight: 700; 
+}
+
+.department, 
+.arrival { 
+    margin-top: 10px; 
+    color: #555; 
+}
+
+.back { 
+    border: 0; 
+    background: none; 
+    font-size: 18px; 
+    cursor: pointer; 
+    margin-bottom: 20px; 
+}
+
+.detail-wrap { 
+    max-width: 1100px; 
+    margin: auto; 
+}
+
+.risk-head { 
+    display: flex; 
+    justify-content: space-between; 
+    align-items: flex-start; 
+}
+
+.risk-number { 
+    font-size: 72px; 
+    font-weight: 900; 
+    color: #d51f26; 
+}
+
+.risk-title { 
+    font-size: 24px; 
+    color: #d51f26; 
+    font-weight: 800; 
+}
+
+.profile h2 { 
+    font-size: 30px; 
+    margin: 0; 
+}
+
+.profile p { 
+    margin: 7px 0; 
+    color: #555; 
+}
+
+.metrics { 
+    display: grid; 
+    grid-template-columns: 1fr 1fr; 
+    gap: 20px; 
+    margin-top: 35px; 
+}
+
+.metric { 
+    border: 1px solid #ddd; 
+    border-radius: 15px; 
+    padding: 22px; 
+    background: #fff; 
+}
+
+.metric-title { 
+    font-size: 16px; 
+    color: #666; 
+}
+
+.metric-value { 
+    font-size: 30px; 
+    font-weight: 800; 
+    margin-top: 8px; 
+}
+
+.questionnaire { 
+    margin-top: 28px; 
+}
+
+.question { 
+    padding: 18px 0; 
+    border-bottom: 1px solid #ddd; 
+}
+
+.q-id { 
+    font-weight: 800; 
+}
+
+.answer { 
+    float: right; 
+    font-weight: 800; 
+}
+
+.answer.HIGH { 
+    color: #d51f26; 
+}
+
+.answer.Moderate { 
+    color: #b67900; 
+}
+
+.answer.Low { 
+    color: #238443; 
+}
+
+.down-arrow {
+    display: block; 
+    margin: 30px auto 10px; 
+    border: 0; 
+    background: #111;
+    color: #fff; 
+    width: 48px; 
+    height: 48px; 
+    border-radius: 50%;
+    font-size: 30px; 
+    cursor: pointer;
+}
+
+.detail-lower { 
+    padding: 50px 0 120px; 
+    min-height: 350px; 
+}
+
+.normal-box {
+    max-width: 800px; 
+    margin: 70px auto; 
+    text-align: center;
+    border: 2px solid #ddd; 
+    border-radius: 20px; 
+    padding: 55px; 
+    background: #fff;
+}
+
+.normal-box h1 { 
+    font-size: 48px; 
+    margin: 10px; 
+}
+
+.normal-box .risk { 
+    font-size: 56px; 
+    font-weight: 900; 
+}
+
+.low { 
+    color: #238443; 
+}
+
+.moderate { 
+    color: #b67900; 
+}
+
+/* =========================
+   4. New Dashboard & Burnout Cards
+   ========================= */
+.dashboard { 
+    width: 95%; 
+    max-width: 1400px; 
+    margin: 0 auto; 
+    padding-top: 20px; 
+}
+
+.header-top { 
+    display: flex; 
+    justify-content: flex-end; 
+    font-weight: 700; 
+    font-size: 16px; 
+    margin-bottom: 20px; 
+    line-height: 1.2; 
+}
+
+.main-title { 
+    text-align: center; 
+    font-size: 26px; 
+    font-weight: 700; 
+    line-height: 1.3; 
+    margin-bottom: 30px; 
+}
+
+.card {
+    background-color: var(--card-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 20px;
+    margin-bottom: 20px;
+    overflow: hidden;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+}
+
+.card-header { 
+    padding: 20px; 
+    display: flex; 
+    align-items: center; 
+    cursor: pointer; 
+    transition: background-color 0.3s ease; 
+    position: relative; 
+    border-bottom: 1px solid transparent; 
+}
+
+.card-header:hover { 
+    background-color: #f8f9fa; 
+}
+
+.card.expanded .card-header { 
+    border-bottom: 1px solid #e0e0e0; 
+}
+
+.profile-img { 
+    width: 100px; 
+    height: 100px; 
+    border-radius: 20px; 
+    object-fit: cover; 
+    margin-right: 20px; 
+    border: 1px solid #ccc; 
+}
+
+.info { 
+    flex-grow: 1; 
+}
+
+.high-burnout-tag { 
+    background-color: var(--red-tag); 
+    color: white; 
+    font-size: 12px; 
+    padding: 3px 12px; 
+    border-radius: 8px; 
+    font-weight: 600; 
+    display: inline-block; 
+    margin-bottom: 8px; 
+}
+
+.name { 
+    font-size: 18px; 
+    font-weight: 500; 
+    margin: 0 0 5px 0; 
+}
+
+.department-name { 
+    font-size: 15px; 
+    color: #555; 
+    margin: 0 0 5px 0; 
+}
+
+.arrival-tag { 
+    background-color: #cdd8ff; 
+    color: var(--blue-text); 
+    font-size: 13px; 
+    padding: 4px 12px; 
+    border-radius: 8px; 
+    display: inline-block; 
+    margin-top: 10px; 
+}
+
+.toggle-btn { 
+    background-color: #000; 
+    color: #fff; 
+    width: 40px; 
+    height: 40px; 
+    border-radius: 50%;
+}
