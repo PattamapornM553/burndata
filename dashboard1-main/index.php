@@ -74,8 +74,7 @@ if ($selected_rfid == '') {
         $w_cam_data[] = ($row['camera_state'] >= 1) ? 100 : 0;
     }
     if($w_total > 0) {
-        $w_burnout_pct = round(($w_burnout / $w_total) * 100);
-        $w_neutral_pct = round(($w_neutral / $w_total) * 100);
+        $w_burnout_pct = round(($w_burnout / $w_total) * 100);$w_neutral_pct = round(($w_neutral / $w_total) * 100);
     }
 
     // ==========================================
@@ -134,17 +133,10 @@ if ($selected_rfid == '') {
                     <?php foreach ($users_data as$user): ?>
                         <?php 
                             $latest_time =$user['latest_time'] ? date("h:i A", strtotime($user['latest_time'])) : "--:-- AM";
-                            $user_final_score = $user['latest_score'] ? floatval($user['latest_score']) : 0;
-                            $is_burnout = ($user_final_score >= 50);
                         ?>
                         <div class="emp-card" onclick="window.location.href='index.php?rfid=<?php echo $user['rfid_uid']; ?>'">
                             <img src="https://via.placeholder.com/100" alt="Profile">
                             <div class="emp-info">
-                                <?php if($is_burnout): ?>
-                                    <div class="high-burnout-tag">High Risk: <?php echo $user_final_score; ?>%</div>
-                                <?php else: ?>
-                                    <div class="normal-tag">Normal: <?php echo $user_final_score; ?>%</div>
-                                <?php endif; ?>
                                 <p class="emp-name">Name: <?php echo htmlspecialchars($user['username']); ?></p>
                                 <p class="emp-dept">RFID : <?php echo htmlspecialchars($user['rfid_uid']); ?></p>
                                 <div class="arrival-tag">Arrival Time: <?php echo $latest_time; ?></div>
@@ -176,12 +168,12 @@ if ($selected_rfid == '') {
                     </div>
                 </div>
 
-                <div class="dash-subheader">
-                    <div class="time-badge">Weekly (Last 5 Scans)</div>
-                    <div class="nav-arrow" onclick="navigateTo('view-monthly')">&#8594;</div>
+                <!-- เมนูแท็บชิดซ้าย (หน้า Weekly) -->
+                <div class="dash-subheader" style="display: flex; justify-content: flex-start; align-items: center; gap: 10px; margin-bottom: 20px;">
+                    <div class="active-badge">Weekly (Last 5 Scans)</div>
+                    <div class="switch-badge" onclick="navigateTo('view-monthly')">Monthly</div>
                 </div>
 
-                <!-- ดึงตัวแปร $w_final_score เฉพาะ 5 วันมาแสดง -->
                 <div class="risk-banner <?php echo ($w_final_score >= 50) ? 'risk-red' : 'risk-green'; ?>">
                     Overall Burnout Risk: <?php echo $w_final_score; ?> %
                 </div>
@@ -224,7 +216,6 @@ if ($selected_rfid == '') {
                     <div class="chart-group">
                         <div class="dash-card">
                             <h3 style="text-align: center; margin-bottom: 5px;">Questionnaire Report</h3>
-                            <!-- เปลี่ยน Legend แบบเดียวกันกับ Camera -->
                             <div class="heatmap-legend" style="margin-top: 0; margin-bottom: 15px;">
                                 <div class="legend-item"><div class="legend-color box-red"></div> High</div>
                                 <div class="legend-item"><div class="legend-color" style="background-color: #fdd835;"></div> Moderate</div>
@@ -258,12 +249,12 @@ if ($selected_rfid == '') {
                     </div>
                 </div>
 
-                <div class="dash-subheader">
-                    <div class="time-badge">Monthly (Last 30 Scans)</div>
-                    <div class="nav-arrow" onclick="navigateTo('view-weekly')">&#8592;</div>
+                <!-- เมนูแท็บชิดซ้าย (หน้า Monthly) จัดลำดับ Weekly-Monthly เหมือนเดิม -->
+                <div class="dash-subheader" style="display: flex; justify-content: flex-start; align-items: center; gap: 10px; margin-bottom: 20px;">
+                    <div class="switch-badge" onclick="navigateTo('view-weekly')">Weekly</div>
+                    <div class="active-badge">Monthly (Last 30 Scans)</div>
                 </div>
 
-                <!-- ดึงตัวแปร $m_final_score เฉพาะ 30 วันมาแสดง -->
                 <div class="risk-banner <?php echo ($m_final_score >= 50) ? 'risk-red' : 'risk-green'; ?>">
                     Overall Burnout Risk: <?php echo $m_final_score; ?> %
                 </div>
@@ -306,7 +297,6 @@ if ($selected_rfid == '') {
                     <div class="chart-group">
                         <div class="dash-card">
                             <h3 style="text-align: center; margin-bottom: 5px;">Questionnaire Report</h3>
-                            <!-- เปลี่ยน Legend แบบเดียวกันกับ Camera -->
                             <div class="heatmap-legend" style="margin-top: 0; margin-bottom: 15px;">
                                 <div class="legend-item"><div class="legend-color box-red"></div> High</div>
                                 <div class="legend-item"><div class="legend-color" style="background-color: #fdd835;"></div> Moderate</div>
@@ -361,17 +351,34 @@ if ($selected_rfid == '') {
                 Chart.register(ChartDataLabels);
                 Chart.defaults.set('plugins.datalabels', { display: false });
 
-                // ปิดการแสดงผล legend เดิมของ chart.js
+                // ปรับแต่ง Formatter ให้แสดงเฉพาะค่าที่มากกว่า 0
                 const donutOptionsNoPercent = {
                     responsive: true, maintainAspectRatio: false, layout: { padding: 5 }, 
-                    plugins: { legend: { display: false }, datalabels: { display: true, color: '#ffffff', font: { weight: 'bold', size: 10 }, formatter: (val) => val } }
+                    plugins: { 
+                        legend: { display: false }, 
+                        datalabels: { 
+                            display: true, 
+                            color: '#ffffff', 
+                            font: { weight: 'bold', size: 10 }, 
+                            formatter: (val) => val > 0 ? val : '' // ซ่อนตัวเลข 0
+                        } 
+                    }
                 };
 
                 // =============== WEEKLY CHARTS (5 Scans) ===============
                 new Chart(document.getElementById('weeklyDonut1'), {
                     type: 'doughnut',
                     data: { labels: ['Burnout', 'Neutral'], datasets: [{ data: [<?php echo $w_burnout_pct; ?>, <?php echo$w_neutral_pct; ?>], backgroundColor: ['#cc0000', '#4caf50'], borderWidth: 0 }] },
-                    options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false }, datalabels: { display: true, color: '#ffffff', font: { weight: 'bold', size: 10 }, formatter: (val) => val + '%' } } }
+                    options: { 
+                        responsive: true, maintainAspectRatio: false, 
+                        plugins: { 
+                            legend: { display: false }, 
+                            datalabels: { 
+                                display: true, color: '#ffffff', font: { weight: 'bold', size: 10 }, 
+                                formatter: (val) => val > 0 ? val + '%' : '' // ซ่อน 0%
+                            } 
+                        } 
+                    }
                 });
 
                 new Chart(document.getElementById('weeklyDonut2'), {
@@ -394,7 +401,16 @@ if ($selected_rfid == '') {
                 new Chart(document.getElementById('monthlyDonut1'), {
                     type: 'doughnut',
                     data: { labels: ['Burnout', 'Neutral'], datasets: [{ data: [<?php echo $m_burnout_pct; ?>, <?php echo$m_neutral_pct; ?>], backgroundColor: ['#cc0000', '#4caf50'], borderWidth: 0 }] },
-                    options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false }, datalabels: { display: true, color: '#ffffff', font: { weight: 'bold', size: 10 }, formatter: (val) => val + '%' } } }
+                    options: { 
+                        responsive: true, maintainAspectRatio: false, 
+                        plugins: { 
+                            legend: { display: false }, 
+                            datalabels: { 
+                                display: true, color: '#ffffff', font: { weight: 'bold', size: 10 }, 
+                                formatter: (val) => val > 0 ? val + '%' : '' // ซ่อน 0%
+                            } 
+                        } 
+                    }
                 });
 
                 new Chart(document.getElementById('monthlyDonut2'), {

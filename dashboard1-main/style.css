@@ -45,11 +45,9 @@ body {
 .emp-card img { width: 100px; height: 100px; border-radius: 20px; object-fit: cover; margin-right: 30px; background-color: #d3d3d3; flex-shrink: 0; }
 .emp-info { flex-grow: 1; display: flex; flex-direction: column; align-items: flex-start; }
 
-.high-burnout-tag { background-color: var(--red-tag); color: white; font-size: 11px; padding: 4px 12px; border-radius: 12px; font-weight: 600; margin-bottom: 8px; }
-.normal-tag { background-color: #4caf50; color: white; font-size: 11px; padding: 4px 12px; border-radius: 12px; font-weight: 600; margin-bottom: 8px; }
 .emp-name { font-size: 18px; font-weight: 600; margin: 0 0 5px 0; }
 .emp-dept { font-size: 14px; color: #555; margin: 0 0 12px 0; }
-.arrival-tag { background-color: var(--blue-tag); color: var(--blue-text); font-size: 12px; padding: 4px 15px; border-radius: 12px; font-weight: 500; }
+.arrival-tag { background-color: var(--blue-tag); color: var(--blue-text); font-size: 12px; padding: 4px 15px; border-radius: 12px; font-weight: 500; white-space: nowrap; }
 .arrow-btn { background-color: #000; color: #fff; width: 35px; height: 35px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 16px; font-weight: bold; border: none; pointer-events: none; }
 
 /* =========================================
@@ -67,10 +65,13 @@ body {
 .dash-profile { display: flex; align-items: center; gap: 15px; }
 .dash-profile img { width: 50px; height: 50px; border-radius: 10px; object-fit: cover; }
 .dash-profile h2 { margin: 0; font-size: 20px; }
-.request-btn { background-color: var(--btn-red); color: white; border: none; padding: 10px 20px; border-radius: 25px; font-weight: 600; cursor: pointer; transition: 0.2s; white-space: nowrap; }
 .dash-subheader { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
 .time-badge { border: 1px solid #ccc; padding: 5px 20px; border-radius: 15px; background-color: #fff; font-weight: 600; font-size: 14px; }
-.nav-arrow { font-size: 30px; color: #b0bec5; cursor: pointer; user-select: none; }
+
+/* ปุ่มเมนูสลับหน้า (Tabs) */
+.active-badge { display: inline-block; background-color: #0d47a1; color: #ffffff; border: 1px solid #0d47a1; padding: 6px 20px; border-radius: 20px; font-size: 14px; font-weight: bold; box-shadow: 0 2px 5px rgba(13, 71, 161, 0.3); }
+.switch-badge { display: inline-block; background-color: #ffffff; border: 1px solid #ced4da; color: #495057; padding: 6px 20px; border-radius: 20px; font-size: 14px; font-weight: 500; cursor: pointer; transition: all 0.2s ease-in-out; }
+.switch-badge:hover { background-color: #f1f3f5; color: #0d47a1; border-color: #0d47a1; }
 
 .risk-banner { text-align: center; font-size: 28px; font-weight: 700; padding: 15px; border-radius: 10px; margin-bottom: 30px; width: 100%; }
 .risk-red { background-color: var(--red-bg); color: var(--btn-red); }
@@ -105,28 +106,21 @@ body {
 /* =========================================
    6. Mobile Layout สำหรับการ์ดหน้า Main
    ========================================= */
-
-/* บังคับไม่ให้ข้อความในป้าย Tag โดนตัดขึ้นบรรทัดใหม่ */
-.high-burnout-tag, .normal-tag, .arrival-tag {
-    white-space: nowrap; 
-}
-
-/* เมื่อหน้าจอแคบกว่า 600px (มือถือ) ให้จัดเรียงการ์ดใหม่เป็นแนวตั้ง */
 @media (max-width: 600px) {
     .emp-card {
-        flex-direction: column; /* เปลี่ยนเป็นแนวตั้ง */
+        flex-direction: column;
         text-align: center;
         padding: 25px 15px;
     }
     .emp-card img {
-        margin: 0 0 15px 0; /* เอา margin ด้านขวาออก และเว้นระยะด้านล่างแทน */
+        margin: 0 0 15px 0;
     }
     .emp-info {
-        align-items: center; /* จัดข้อความให้อยู่กึ่งกลาง */
+        align-items: center;
         width: 100%;
     }
     .arrow-btn {
-        margin-top: 15px; /* ย้ายปุ่มลูกศรลงมาอยู่ด้านล่างสุด */
+        margin-top: 15px;
         align-self: center;
     }
 }
@@ -134,8 +128,6 @@ body {
 /* =========================================
    7. Heatmap Graph (Camera Score)
    ========================================= */
-
-/* สำหรับหน้า Weekly (5 ช่อง): จัดให้อยู่ตรงกลาง */
 .heatmap-weekly {
     display: flex;
     justify-content: center;
@@ -144,18 +136,16 @@ body {
     padding: 10px 0;
 }
 
-/* สำหรับหน้า Monthly (30 ช่อง): แบ่ง 10 ช่อง และลดขนาดกล่องลงเพื่อให้พอดีกับการ์ด */
 .heatmap-monthly {
     display: grid;
-    grid-template-columns: repeat(10, 16px); /* ลดขนาดกล่องเหลือ 16px */
+    grid-template-columns: repeat(10, 16px);
     grid-auto-rows: 16px;
-    gap: 5px; /* ลดช่องไฟเหลือ 5px */
+    gap: 5px;
     justify-content: center;
     margin: 0 auto;
     padding: 10px 0;
 }
 
-/* ขนาดกล่องมาตรฐาน (เปลี่ยนเป็น 16px) */
 .heatmap-box {
     width: 16px;
     height: 16px;
@@ -165,7 +155,6 @@ body {
     transition: transform 0.2s, box-shadow 0.2s;
 }
 
-/* ปรับขนาดกล่องเฉพาะของหน้า Weekly ให้ใหญ่ขึ้นได้ เพราะมีแค่ 5 กล่องไม่ล้นแน่นอน */
 .heatmap-weekly .heatmap-box {
     width: 24px;
     height: 24px;
@@ -176,11 +165,9 @@ body {
     box-shadow: 0 2px 5px rgba(0,0,0,0.2);
 }
 
-/* บังคับสีให้แสดงผล 100% ไม่โดนทับ */
 .box-red { background-color: #cc0000 !important; }
 .box-green { background-color: #4caf50 !important; }
 
-/* จุดอธิบายสี */
 .heatmap-legend {
     display: flex;
     justify-content: center;
