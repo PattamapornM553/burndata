@@ -139,32 +139,33 @@ body {
 .heatmap-weekly {
     display: flex;
     justify-content: center;
-    gap: 15px;
+    gap: 12px;
     margin: 0 auto;
-    padding: 10px 5px;
+    padding: 10px 0;
 }
 
-/* สำหรับหน้า Monthly (30 ช่อง): แบ่ง 10 ช่อง (รวม 3 แถว) */
+/* สำหรับหน้า Monthly (30 ช่อง): แบ่ง 10 ช่อง และลดขนาดกล่องลงเพื่อให้พอดีกับการ์ด */
 .heatmap-monthly {
     display: grid;
-    grid-template-columns: repeat(10, 20px); /* ล็อคขนาดกล่องที่ 20px จะได้ไม่ล้นกรอบ */
-    gap: 6px;
+    grid-template-columns: repeat(10, 16px); /* ลดขนาดกล่องเหลือ 16px */
+    grid-auto-rows: 16px;
+    gap: 5px; /* ลดช่องไฟเหลือ 5px */
     justify-content: center;
     margin: 0 auto;
-    padding: 10px 5px;
+    padding: 10px 0;
 }
 
-/* ขนาดกล่องมาตรฐาน (สำหรับ Monthly) */
+/* ขนาดกล่องมาตรฐาน (เปลี่ยนเป็น 16px) */
 .heatmap-box {
-    width: 20px;
-    height: 20px;
-    border-radius: 4px;
+    width: 16px;
+    height: 16px;
+    border-radius: 3px;
     background-color: #ebedf0; 
     cursor: pointer;
     transition: transform 0.2s, box-shadow 0.2s;
 }
 
-/* ปรับขนาดกล่องเฉพาะของหน้า Weekly ให้ใหญ่ขึ้นนิดนึงได้ */
+/* ปรับขนาดกล่องเฉพาะของหน้า Weekly ให้ใหญ่ขึ้นได้ เพราะมีแค่ 5 กล่องไม่ล้นแน่นอน */
 .heatmap-weekly .heatmap-box {
     width: 24px;
     height: 24px;

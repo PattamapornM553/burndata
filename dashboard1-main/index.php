@@ -74,7 +74,8 @@ if ($selected_rfid == '') {
         $w_cam_data[] = ($row['camera_state'] >= 1) ? 100 : 0;
     }
     if($w_total > 0) {
-        $w_burnout_pct = round(($w_burnout / $w_total) * 100);$w_neutral_pct = round(($w_neutral / $w_total) * 100);
+        $w_burnout_pct = round(($w_burnout / $w_total) * 100);
+        $w_neutral_pct = round(($w_neutral / $w_total) * 100);
     }
 
     // ==========================================
@@ -222,7 +223,13 @@ if ($selected_rfid == '') {
                     <!-- คอลัมน์ที่ 3: Questionnaire และ HRV Weekly -->
                     <div class="chart-group">
                         <div class="dash-card">
-                            <h3>Questionnaire Report</h3>
+                            <h3 style="text-align: center; margin-bottom: 5px;">Questionnaire Report</h3>
+                            <!-- เปลี่ยน Legend แบบเดียวกันกับ Camera -->
+                            <div class="heatmap-legend" style="margin-top: 0; margin-bottom: 15px;">
+                                <div class="legend-item"><div class="legend-color box-red"></div> High</div>
+                                <div class="legend-item"><div class="legend-color" style="background-color: #fdd835;"></div> Moderate</div>
+                                <div class="legend-item"><div class="legend-color box-green"></div> Low</div>
+                            </div>
                             <div class="donut-container" style="height: 180px;"><canvas id="weeklyDonut2"></canvas></div>
                         </div>
                         <div class="dash-card">
@@ -298,7 +305,13 @@ if ($selected_rfid == '') {
                     <!-- คอลัมน์ที่ 3: Questionnaire และ HRV Monthly -->
                     <div class="chart-group">
                         <div class="dash-card">
-                            <h3>Questionnaire Report</h3>
+                            <h3 style="text-align: center; margin-bottom: 5px;">Questionnaire Report</h3>
+                            <!-- เปลี่ยน Legend แบบเดียวกันกับ Camera -->
+                            <div class="heatmap-legend" style="margin-top: 0; margin-bottom: 15px;">
+                                <div class="legend-item"><div class="legend-color box-red"></div> High</div>
+                                <div class="legend-item"><div class="legend-color" style="background-color: #fdd835;"></div> Moderate</div>
+                                <div class="legend-item"><div class="legend-color box-green"></div> Low</div>
+                            </div>
                             <div class="donut-container" style="height: 180px;"><canvas id="monthlyDonut2"></canvas></div>
                         </div>
                         <div class="dash-card">
@@ -348,9 +361,10 @@ if ($selected_rfid == '') {
                 Chart.register(ChartDataLabels);
                 Chart.defaults.set('plugins.datalabels', { display: false });
 
+                // ปิดการแสดงผล legend เดิมของ chart.js
                 const donutOptionsNoPercent = {
                     responsive: true, maintainAspectRatio: false, layout: { padding: 5 }, 
-                    plugins: { legend: { position: 'bottom', labels: { font: { size: 10 }, boxWidth: 10 } }, datalabels: { display: true, color: '#ffffff', font: { weight: 'bold', size: 10 }, formatter: (val) => val } }
+                    plugins: { legend: { display: false }, datalabels: { display: true, color: '#ffffff', font: { weight: 'bold', size: 10 }, formatter: (val) => val } }
                 };
 
                 // =============== WEEKLY CHARTS (5 Scans) ===============
