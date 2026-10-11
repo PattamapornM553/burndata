@@ -84,7 +84,7 @@ while True:
                 
                 # คำนวณ Daily Score ของแต่ละวัน
                 # Daily Score = (กล้อง * 0.50) + (คำถาม * 0.30) + (HRV * 0.20)
-                daily_score = (cam_score * 0.50) + (survey_score * 0.30) + (hrv_score * 0.20)
+                daily_score = (cam_score * 0.40) + (survey_score * 0.20) + (hrv_score * 0.40)
                 sum_daily_scores += daily_score
 
             # คำนวณค่าเฉลี่ย 5 วัน (5-Day Moving Average)
